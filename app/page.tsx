@@ -5,11 +5,11 @@ export default function Home() {
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 py-16">
       <Image
-        src="/file.svg"
+        src="/church-chapel.svg"
         alt="Sacrament meeting planner illustration"
-        width={80}
-        height={80}
-        className="mx-auto mb-6"
+        width={100}
+        height={100}
+        className="mx-auto mb-4"
       />
       <section className="rounded-2xl bg-blue-50 px-6 py-16 text-center sm:px-12">
         <p className="mb-4 font-semibold uppercase tracking-wider text-blue-700">
