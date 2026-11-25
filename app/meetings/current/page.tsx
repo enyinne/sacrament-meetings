@@ -1,4 +1,3 @@
-
 import type { SacramentMeeting } from "@/lib/types";
 import { headers } from "next/headers";
 import { connection } from "next/server";
@@ -54,13 +53,8 @@ async function CurrentMeetingContent() {
   const currentMeeting = meetings[0];
 
   if (!currentMeeting) {
-    return (
-      <div className="mx-auto max-w-4xl px-6 py-10">
-        <h1 className="text-2xl font-bold">Current Meeting</h1>
-        <p>No meeting is scheduled for this Sunday.</p>
-      </div>
-    );
+    return redirect("/meetings");
   }
 
-  redirect(`/meetings/${currentMeeting.id}`);
+ return redirect(`/meetings/${currentMeeting.id}`);
 }
