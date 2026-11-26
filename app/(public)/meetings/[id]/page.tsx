@@ -1,9 +1,6 @@
-
 import MeetingDetail from "@/components/MeetingDetail";
 import PrintButton from "@/components/PrintButton";
-import type { SacramentMeeting } from "@/lib/types";
-import { headers } from "next/headers";
-import { connection } from "next/server";
+import { getMeetingById } from "@/lib/meetings-db";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -26,8 +23,6 @@ export default function MeetingPage({ params }: MeetingPageProps) {
 }
 
 async function MeetingPageContent({ params }: MeetingPageProps) {
-  await connection();
-
   const { id } = await params;
   const meetingId = Number(id);
 
@@ -35,28 +30,11 @@ async function MeetingPageContent({ params }: MeetingPageProps) {
     notFound();
   }
 
-  const headersList = await headers();
-  const host = headersList.get("host");
-  const protocol = headersList.get("x-forwarded-proto") ?? "http";
+  const meeting = await getMeetingById(meetingId);
 
-  if (!host) {
-    throw new Error("Unable to determine the server address.");
-  }
-
-  const response = await fetch(
-    `${protocol}://${host}/api/meetings/${meetingId}`,
-    { cache: "no-store" },
-  );
-
-  if (response.status === 404 || response.status === 400) {
+  if (!meeting) {
     notFound();
   }
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch meeting details.");
-  }
-
-  const meeting: SacramentMeeting = await response.json();
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
