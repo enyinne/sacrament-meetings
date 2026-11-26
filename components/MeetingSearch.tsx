@@ -22,8 +22,8 @@ export default function MeetingSearch() {
     }
 
     params.set("page", "1");
-
-    router.replace(`${pathname}?${params.toString()}`);
+    
+    router.push(`${pathname}?${params.toString()}`);
   }, 300);
 
   return (
